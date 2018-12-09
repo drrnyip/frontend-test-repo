@@ -1,0 +1,41 @@
+<mat-card>
+  <div class="title">
+    <mat-card-title>{{operator}}</mat-card-title>
+    <mat-card-subtitle>Enter your phone number and amount to refill</mat-card-subtitle>
+  </div>
+
+  <div class="flexbox">
+
+    <form [formGroup]="refillForm">
+      <mat-form-field class="flex-item" appearance="standard">
+        <mat-label>Enter phone number</mat-label>
+
+        <input type="tel" formControlName="phone" matInput placeholder="495 12-34-56" (keydown)="maskPhone($event)">
+        <mat-hint align="start"><strong>Please enter the phone number to refill </strong> </mat-hint>
+        <mat-error *ngIf="refillForm.controls.phone.hasError('invalid')">
+          Invalid phone number
+        </mat-error>
+        <mat-icon matPrefix>phone</mat-icon>
+
+      </mat-form-field>
+
+      <mat-form-field class="flex-item" appearance="standard">
+        <mat-label>Enter amount to refill</mat-label>
+        <input id="ruble" type="text" formControlName="amount" (keydown)="maskAmount($event)" matInput>
+        <mat-hint align="start"><strong>Please enter an amount between ₽1 and ₽1,000 </strong> </mat-hint>
+        <span matPrefix>₽&nbsp;</span>
+        <span matSuffix>.00</span>
+        <mat-error *ngIf="refillForm.controls.amount.hasError('invalid')">
+          Invalid amount
+        </mat-error>
+      </mat-form-field>
+    </form>
+
+    <!-- Submit button - should wait for a response from the server, show a message about the success or error. 
+          In case of success, return to the main screen. Success and error should be implemented randomly. -->
+  </div>
+  <div class="flexbox">
+    <button class="button" mat-raised-button color="secondary" (click)="returnToOperator()">Go Back</button>
+    <button class="button" mat-raised-button color="primary" (click)="confirmRefill()">Confirm</button>
+  </div>
+</mat-card>

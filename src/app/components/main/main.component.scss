@@ -1,0 +1,25 @@
+@import '../../../styles.scss';
+
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+
+.flexbox {
+    align-content: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: safe center;
+    
+    .flex-item {
+        width: 400px;
+        flex-basis: 0;
+    }
+}
+
+.button {
+    max-width: 350px;
+    min-width: 200px;
+    flex: 1 1 auto;
+}

@@ -1,0 +1,23 @@
+<mat-card>
+  <div class="title">
+    <mat-card-title>Supported Telecom Operators</mat-card-title>
+    <mat-card-subtitle>To refill balance of cellular operator, please select your desired operator.</mat-card-subtitle>
+  </div>
+
+  <div class="flexbox">
+    <mat-form-field class="flex-item" appearance="outline">
+      <mat-label>Operators</mat-label>
+      <mat-icon matSuffix>signal_cellular_alt</mat-icon>
+      <mat-select placeholder="Select Operator" [(value)]="selectedOption">
+        <mat-option *ngFor="let operator of operators" [value]="operator">
+          {{operator}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    </div>
+    <div class="flexbox">
+      <button class="button" mat-raised-button color="primary" (click)="selectOperator()">Select Operator</button>
+
+    </div>
+</mat-card>
