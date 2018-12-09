@@ -23,7 +23,7 @@
         <mat-label>Enter amount to refill</mat-label>
         <input id="ruble" type="text" formControlName="amount" (keydown)="maskAmount($event)" matInput>
         <mat-hint align="start"><strong>Please enter an amount between ₽1 and ₽1,000 </strong> </mat-hint>
-        <span matPrefix>₽&nbsp;</span>
+        <span matPrefix><strong>₽</strong>&nbsp;</span>
         <span matSuffix>.00</span>
         <mat-error *ngIf="refillForm.controls.amount.hasError('invalid')">
           Invalid amount
