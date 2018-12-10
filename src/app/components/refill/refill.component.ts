@@ -48,7 +48,7 @@ export class RefillComponent implements OnInit {
     let errors = false;
     const refillAmount = this.refillForm.value.amount.replace(/\D/g, '');
     const phoneNumber = this.refillForm.value.phone.replace(/\D/g, '');
-    if (this.refillForm.dirty && !this.refillForm.errors) {
+    if (this.refillForm.dirty && !this.refillForm.errors && this.refillForm.valid) {
       if (refillAmount < 0 || refillAmount > 1000) {
         this.refillForm.controls['amount'].setErrors({ 'invalid': true });
         errors = true;
