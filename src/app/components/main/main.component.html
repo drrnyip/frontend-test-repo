@@ -7,7 +7,7 @@
   <div class="flexbox">
     <mat-form-field class="flex-item" appearance="outline">
       <mat-label>Operators</mat-label>
-      <mat-icon matSuffix>signal_cellular_alt</mat-icon>
+      <mat-icon matPrefix>signal_cellular_alt</mat-icon>
       <mat-select placeholder="Select Operator" [(value)]="selectedOption">
         <mat-option *ngFor="let operator of operators" [value]="operator">
           {{operator}}

@@ -1,41 +1,69 @@
 <mat-card>
-  <div class="title">
+  <div *ngIf="state == 'refilling'" class="title">
     <mat-card-title>{{operator}}</mat-card-title>
     <mat-card-subtitle>Enter your phone number and amount to refill</mat-card-subtitle>
   </div>
 
-  <div class="flexbox">
+  <div *ngIf="state == 'refilling'">
+    <div class="flexbox">
+      <form [formGroup]="refillForm">
+        <!-- Phone number form -->
+        <mat-form-field class="flex-item" appearance="standard">
+          <mat-label>Enter phone number</mat-label>
+          <input type="tel" formControlName="phone" matInput placeholder="(495) 12-34-56" (keydown)="maskPhone($event)">
+          <mat-hint align="start"><strong>Please enter the phone number to refill </strong> </mat-hint>
+          <mat-error *ngIf="refillForm.controls.phone.hasError('invalid')">
+            Invalid phone number
+          </mat-error>
+          <mat-icon matPrefix>phone</mat-icon>
+        </mat-form-field>
 
-    <form [formGroup]="refillForm">
-      <mat-form-field class="flex-item" appearance="standard">
-        <mat-label>Enter phone number</mat-label>
-
-        <input type="tel" formControlName="phone" matInput placeholder="495 12-34-56" (keydown)="maskPhone($event)">
-        <mat-hint align="start"><strong>Please enter the phone number to refill </strong> </mat-hint>
-        <mat-error *ngIf="refillForm.controls.phone.hasError('invalid')">
-          Invalid phone number
-        </mat-error>
-        <mat-icon matPrefix>phone</mat-icon>
-
-      </mat-form-field>
-
-      <mat-form-field class="flex-item" appearance="standard">
-        <mat-label>Enter amount to refill</mat-label>
-        <input id="ruble" type="text" formControlName="amount" (keydown)="maskAmount($event)" matInput>
-        <mat-hint align="start"><strong>Please enter an amount between ₽1 and ₽1,000 </strong> </mat-hint>
-        <span matPrefix><strong>₽</strong>&nbsp;</span>
-        <span matSuffix>.00</span>
-        <mat-error *ngIf="refillForm.controls.amount.hasError('invalid')">
-          Invalid amount
-        </mat-error>
-      </mat-form-field>
-    </form>
-
-    <!-- Submit button - should wait for a response from the server, show a message about the success or error. 
-          In case of success, return to the main screen. Success and error should be implemented randomly. -->
+        <!-- Amount form -->
+        <mat-form-field class="flex-item" appearance="standard">
+          <mat-label>Enter amount to refill</mat-label>
+          <input id="ruble" type="text" formControlName="amount" (keydown)="maskAmount($event)" matInput>
+          <mat-hint align="start"><strong>Please enter an amount between ₽1 and ₽1,000 </strong> </mat-hint>
+          <span matPrefix><strong>₽</strong>&nbsp;</span>
+          <span matSuffix>.00</span>
+          <mat-error *ngIf="refillForm.controls.amount.hasError('invalid')">
+            Invalid amount
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="flexbox">
+      <button #returnBtn class="button" mat-raised-button color="secondary" (click)="returnToOperator()">Go Back</button>
+      <button #confirmBtn class="button" mat-raised-button color="primary" (click)="confirmRefill()">Confirm</button>
+    </div>
   </div>
-  <div class="flexbox">
-    <button class="button" mat-raised-button color="secondary" (click)="returnToOperator()">Go Back</button>
-    <button class="button" mat-raised-button color="primary" (click)="confirmRefill()">Confirm</button>
+
+  <!-- Loading state -->
+  <div *ngIf="state == 'loading'">
+    <div class="center">
+      <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/585d0331234507.564a1d239ac5e.gif">
+      <mat-card-title>Processing request...</mat-card-title>
+    </div>
   </div>
+
+  <!-- Success state -->
+  <div *ngIf="state == 'success'">
+    <div class="center">
+      <img src="https://www.freepngimg.com/thumb/success/6-2-success-png-image.png">
+      <mat-card-title>Successfully updated your account. Your remaining balance is ₽{{remainingBalance}}</mat-card-title>
+      <mat-card-subtitle>Redirecting to home page in 5 seconds...</mat-card-subtitle>
+    </div>
+  </div>
+
+  <!-- Failure state -->
+  <div *ngIf="state == 'failure'">
+    <div class="center">
+      <img src="https://cdn2.iconfinder.com/data/icons/security-2-1/512/security_fail-512.png">
+      <mat-card-title>Failed to update account</mat-card-title>
+    </div>
+    <div class="flexbox">
+      <button class="button" mat-raised-button color="secondary" (click)="returnToOperator()">Return to Home Page</button>
+      <button class="button" mat-raised-button color="primary" (click)="returnToRefillPage()">Try Again</button>
+      </div>
+  </div>
+
 </mat-card>
