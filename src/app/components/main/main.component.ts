@@ -24,7 +24,8 @@ export class MainComponent implements OnInit {
 
   public selectOperator() {
     if (this.selectedOption.length <= 0) {
-      console.log("No option is selected");
+      console.log('No option is selected');
+      return;
     }
     this._router.navigate(['/', 'refill', this.selectedOption]);
   }
